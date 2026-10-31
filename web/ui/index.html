@@ -1,0 +1,360 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>AgentCorp</title>
+    <!-- Relative and served by the app itself, so the app makes no requests it
+         does not control, and the video's copy of this page finds its own. -->
+    <link rel="icon" href="logo.svg" type="image/svg+xml" />
+    <script type="module" crossorigin src="APP_SCRIPT"></script>
+    <link rel="stylesheet" crossorigin href="APP_STYLES">
+  </head>
+  <body>
+    <div id="app">
+      <div class="startup" id="startup" role="status" aria-live="polite">
+        <div class="startup-card">
+          <div class="startup-brand">
+            <img class="startup-logo" src="logo.svg" alt="" />
+            <div class="startup-title">AgentCorp</div>
+          </div>
+          <div class="startup-status" id="startupStatus">Starting the office…</div>
+          <div class="startup-track" aria-hidden="true"><i id="startupBar"></i></div>
+          <span class="sr" id="startupPercent">0%</span>
+        </div>
+      </div>
+      <!-- The isometric office. The canvas is appended here by the scene;
+           speech bubbles are DOM, positioned over it each frame so they stay
+           crisp and keyboard reachable. -->
+      <div id="stage" aria-label="Office floor"></div>
+      <div id="bubbles" aria-live="polite"></div>
+      <!-- Without this the room carries on bustling after the server dies,
+           which reads as a healthy office where every click silently fails. -->
+      <div id="offline" role="status" hidden>
+        <b>Server offline</b>
+        <span>The office is frozen — what you see is the last thing the server said. Waiting to reconnect…</span>
+      </div>
+      <div id="cards" class="cards" hidden aria-label="Workers"></div>
+      <div class="viewbar">
+        <div class="views" id="views" role="radiogroup" aria-label="View"></div>
+        <div class="turn" role="group" aria-label="Turn the view" data-tip-align="end">
+          <!-- ⟲ and ⟳, drawn: the display font has neither, and the fallback's are tiny. -->
+          <button class="btn small" id="turnLeft" type="button" aria-label="Turn the view left" title="Turn left">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"/></svg>
+          </button>
+          <button class="btn small" id="turnRight" type="button" aria-label="Turn the view right" title="Turn right">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>
+          </button>
+        </div>
+      </div>
+      <section class="guide" id="guide" hidden aria-label="Office manager" aria-live="polite"></section>
+
+      <button class="btn small music-toggle" id="musicToggle" type="button" aria-label="Toggle music" title="Toggle music"><svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg></button>
+      <div class="zoom" data-tip-align="left">
+        <button class="btn small" id="zin" aria-label="Zoom in" title="Zoom in">+</button>
+        <!-- The turn buttons share this one's row. -->
+        <button class="btn small" id="zout" aria-label="Zoom out" title="Zoom out" data-tip-align="up-left">&minus;</button>
+      </div>
+
+      <header class="hud">
+        <div class="brand">
+          <img class="brand-logo" src="logo.svg" alt="" width="22" height="22" />
+          <h1>AgentCorp</h1>
+        </div>
+        <div class="stats">
+
+          <button class="btn primary" id="openTickets" type="button">Hire</button>
+          <button class="btn" id="openWorkers" type="button">Workers</button>
+          <button class="btn messages-btn" id="openMessages" type="button" aria-label="Messages" title="Messages">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+            <span class="unread-dot" id="unreadDot" hidden></span>
+          </button>
+          <button class="btn avatar-btn" id="openSettings" type="button" aria-label="Settings" title="Settings"></button>
+        </div>
+      </header>
+
+      <section class="panel" id="ticketPanel" hidden aria-label="Hire">
+        <div class="ph">
+          <div class="row">
+            <h2>Hire</h2>
+            <button class="close" id="closeTickets" type="button" aria-label="Close hiring"><svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+          </div>
+          <div class="sub-line">
+            <span class="sub" id="ticketSub"></span>
+            <button class="icon-btn" id="refreshTickets" type="button" title="Poll for new tickets now" aria-label="Poll for new tickets now">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 12a8 8 0 1 1-2.34-5.66"/><path d="M20 4v5h-5"/></svg>
+            </button>
+          </div>
+          <div class="hire-runner" id="hireRunner"></div>
+          <div class="search-line">
+            <input class="ask-path ticket-search" id="ticketSearch" type="search" placeholder="Search by key, title, type or status" aria-label="Search tickets" autocomplete="off" />
+            <details class="filter-menu" id="ticketFilter">
+              <summary class="filter-btn" title="Filter tickets">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 5h18l-7 8v6l-4 2v-8z"/></svg>
+                <span>Filter</span>
+                <span class="filter-count" id="filterCount" hidden></span>
+              </summary>
+              <div class="filter-pop" id="sourceFilter"></div>
+            </details>
+          </div>
+        </div>
+        <div class="pb" id="ticketList"></div>
+      </section>
+
+      <section class="panel" id="ideasPanel" hidden aria-label="Ideas">
+        <div class="panel-resize right" id="ideasResize" role="separator" aria-orientation="vertical" aria-label="Resize ideas" title="Drag to resize, double-click to reset" tabindex="0"></div>
+        <div class="ph">
+          <div class="row">
+            <h2>Ideas</h2>
+            <button class="close" id="closeIdeas" type="button" aria-label="Close ideas"><svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+          </div>
+          <span class="sub" id="ideasSub"></span>
+        </div>
+        <div class="pb" id="ideasList"></div>
+      </section>
+
+      <section class="panel" id="workersPanel" hidden aria-label="Workers">
+        <div class="ph">
+          <div class="row">
+            <h2>Workers</h2>
+            <button class="close" id="closeWorkers" type="button" aria-label="Close workers"><svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+          </div>
+          <span class="sub" id="workersSub"></span>
+          <div class="tabs source-tabs" role="tablist" aria-label="Worker lists">
+            <button class="tab" role="tab" id="workersHere" aria-selected="true" type="button">Here</button>
+            <button class="tab" role="tab" id="workersPrevious" aria-selected="false" type="button">Previous</button>
+          </div>
+        </div>
+        <div class="pb" id="workersList"></div>
+      </section>
+
+      <section class="panel" id="messagesPanel" hidden aria-label="Messages">
+        <div class="ph">
+          <div class="row">
+            <h2>Messages</h2>
+            <button class="close" id="closeMessages" type="button" aria-label="Close messages"><svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+          </div>
+          <span class="sub" id="messagesSub"></span>
+        </div>
+        <div class="pb" id="messagesList"></div>
+      </section>
+
+      <section class="panel" id="settingsPanel" hidden aria-label="Settings">
+        <div class="ph">
+          <div class="row">
+            <h2>Settings</h2>
+            <button class="close" id="closeSettings" type="button" aria-label="Close settings"><svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+          </div>
+          <span class="sub" id="settingsSub"></span>
+          <div class="tabs" role="tablist" aria-label="Settings sections">
+            <button class="tab" role="tab" id="sGeneral" aria-selected="true" type="button">General</button>
+            <button class="tab" role="tab" id="sLibrary" aria-selected="false" type="button">Toolkit</button>
+            <button class="tab" role="tab" id="sWorkspace" aria-selected="false" type="button">Workspace</button>
+            <button class="tab" role="tab" id="sMemory" aria-selected="false" type="button">Memory</button>
+            <button class="tab" role="tab" id="sShortcuts" aria-selected="false" type="button">Shortcuts</button>
+
+            <button class="tab" role="tab" id="sProfile" aria-selected="false" type="button">Profile</button>
+          </div>
+        </div>
+        <div class="pb" id="settingsBody"></div>
+        <!-- The Memory tab. It keeps its own list, so it is not redrawn with the other tabs. -->
+        <div class="pb" id="memoryView" hidden aria-label="Memory">
+          <div class="memory-tools">
+            <select class="dropdown memory-repo" id="memoryRepo" aria-label="Repository"></select>
+            <div class="search-line">
+              <input class="ask-path ticket-search" id="memorySearch" type="search" placeholder="Search lessons" aria-label="Search memories" autocomplete="off" />
+              <button class="btn small primary" id="memoryAdd" type="button">Add</button>
+              <button class="btn small" id="memoryExport" type="button" title="Download these memories as Markdown">Export</button>
+            </div>
+            <!-- What memory is, in plain words. Dismissed once, it stays a "What's this?" link. -->
+            <div class="memory-about" id="memoryAbout" role="note" aria-label="About memory" tabindex="-1">
+              <p>Workers keep notes on what they learn in this repo, like your conventions, tricky spots and feedback from reviews. When a new worker starts a task, it gets the notes that matter, so it doesn't repeat old mistakes. You can add, fix or delete any note here.</p>
+              <button class="btn small ghost" id="memoryAboutHide" type="button">Got it</button>
+            </div>
+            <div class="memory-sub-line">
+              <span class="sub" id="memorySub"></span>
+              <button class="link-button memory-about-show" id="memoryAboutShow" type="button" hidden>What's this?</button>
+            </div>
+            <span class="msg-line sub" id="memoryStatus" role="status" aria-live="polite"></span>
+          </div>
+          <div class="memory-list" id="memoryList" aria-busy="false"></div>
+        </div>
+      </section>
+
+      <section class="panel" id="agentPanel" hidden aria-label="Worker">
+        <div class="panel-resize" id="agentResize" role="separator" aria-orientation="vertical" aria-label="Resize chat" title="Drag to resize, double-click to reset" tabindex="0"></div>
+        <div class="ph">
+          <div class="row">
+            <div class="agent-title">
+              <h2 id="aName">Worker</h2>
+              <!-- Grey while idle, amber while reading memory, green while saving.
+                   The label says which, so it is never down to colour alone. -->
+              <button class="brain" id="aBrain" type="button" data-memory="idle" aria-label="Memory idle" title="Memory idle" hidden>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 7v14"/><path d="M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3z"/></svg>
+              </button>
+              <span class="sr" id="aBrainStatus" role="status" aria-live="polite"></span>
+              <!-- Model and effort, set off from the name and memory by a divider. -->
+              <div class="sub-line agent-setup">
+                <span class="sub" id="aSetup"></span>
+                <button class="rename-btn tune-btn" id="aSetupBtn" type="button" aria-expanded="false" aria-controls="aSetupControls"></button>
+              </div>
+            </div>
+            <div class="row">
+              <span class="pill" id="aPill">Working</span>
+              <button class="close" id="closeAgent" type="button" aria-label="Close worker"><svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+            </div>
+          </div>
+          <span class="sub" id="aTicket"></span>
+          <div id="aSetupControls" hidden></div>
+          <div class="agent-place" id="aPlace"></div>
+          <!-- The mock had Chat and Terminal tabs here. There is only one view
+               now, so the row is what you can do to the worker instead. -->
+          <div class="tabs">
+            <button class="btn small primary" id="openIde" type="button" title="Open this agent's worktree in the IDE picked in Settings">
+              Open in IDE
+            </button>
+            <!-- An anchor, so middle click and copy link still work. -->
+            <a class="btn small" id="openTicket" target="_blank" rel="noreferrer" hidden>Open ticket</a>
+            <button class="btn small" id="newChat" type="button" title="Start again with a worker that remembers none of this">
+              New chat
+            </button>
+            <button class="btn small" id="chatHistory" type="button" aria-expanded="false" title="Earlier conversations with this worker">
+              History
+            </button>
+            <button class="btn small danger" id="fireAgent" type="button" title="Send this worker home">
+              Fire
+            </button>
+            <button class="btn small primary" id="rehireAgent" type="button" hidden title="Bring this worker back with their name, look, setup and chats">
+              Rehire
+            </button>
+          </div>
+        </div>
+        <div class="pb" id="agentBody"></div>
+        <div class="pf" id="agentFoot">
+          <button class="new-msgs" id="newMsgs" type="button" hidden><svg class="text-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="12" y1="5" x2="12" y2="19"/><polyline points="19 12 12 19 5 12"/></svg>New messages</button>
+          <div class="slash-menu" id="slashMenu" role="listbox" aria-label="Commands and skills" hidden></div>
+          <div class="at-menu" id="atMenu" role="listbox" aria-label="Workers to mention" hidden></div>
+          <div class="attach-list" id="attachList" hidden></div>
+          <input type="file" id="attachInput" multiple hidden />
+          <button class="btn attach" id="attachBtn" type="button" aria-label="Attach files" title="Attach files, or paste or drop them here"><svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21.44 11.05l-9.19 9.19a6 6 0 0 1-8.49-8.49l9.19-9.19a4 4 0 0 1 5.66 5.66l-9.2 9.19a2 2 0 0 1-2.83-2.83l8.49-8.48"/></svg></button>
+          <label class="sr" for="chatInput">Message</label>
+          <textarea id="chatInput" rows="1" placeholder="Message worker" autocomplete="off"></textarea>
+          <button class="btn primary" id="sendBtn" type="button">Send</button>
+          <div class="pf-meta">
+            <p class="ai-disclaimer">AI can make mistakes. Check important info before relying on it.</p>
+            <div class="pf-nav">
+              <button class="btn small" id="prevWorker" type="button" aria-label="Previous worker" title="Previous worker"><svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg></button>
+              <button class="btn small" id="nextWorker" type="button" aria-label="Next worker" title="Next worker"><svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <div class="toasts" id="toasts" role="status" aria-live="polite"></div>
+
+
+
+
+
+      <dialog class="terms" id="termsDialog" aria-labelledby="termsTitle">
+        <div class="ph">
+          <div class="row">
+            <h2 id="termsTitle">Terms of Service</h2>
+            <button class="close" id="closeTerms" type="button" aria-label="Close Terms of Service"><svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+          </div>
+        </div>
+        <div class="terms-body">
+          <h3 id="termsUseHeading">Terms of Use</h3>
+          <p>Use AgentCorp lawfully and only with accounts, repositories, tickets, and services you are authorized to access. You are responsible for your account, the instructions you give workers, and reviewing agent-generated work before using or shipping it.</p>
+          <p>Workers use the coding-agent accounts and third-party services you connect. Their availability, limits, and terms may apply separately. We may change or discontinue features, and may suspend access when needed to protect the service or its users.</p>
+
+          <h3 id="termsPrivacyHeading">Privacy</h3>
+          <p>AgentCorp records local usage on your account:</p>
+          <ul>
+            <li>event names, setup choices, counts, and timestamps</li>
+            <li>usage is stored locally</li>
+          </ul>
+          <p>It does not record message text, ticket titles, or repository paths. All operations are isolated to your local environment.</p>
+          <p>We may update these terms as the product changes. Continued use after an update means you accept the updated terms.</p>
+        </div>
+      </dialog>
+
+      <div class="levelup" id="levelUp" role="dialog" aria-modal="true" aria-labelledby="levelUpRank" hidden>
+        <div class="levelup-confetti" id="levelUpConfetti" aria-hidden="true"></div>
+        <div class="levelup-card">
+          <span class="levelup-kicker">Promoted!</span>
+          <div class="levelup-badge" id="levelUpBadge"></div>
+          <h2 id="levelUpRank"></h2>
+          <span class="levelup-level" id="levelUpLevel"></span>
+          <button class="btn primary" id="levelUpOk" type="button">Carry on</button>
+        </div>
+      </div>
+
+
+
+      <div class="quit-confirm" id="quitConfirm" role="dialog" aria-modal="true" aria-labelledby="quitConfirmTitle" hidden>
+        <div class="quit-confirm-card ticket">
+          <span class="quit-confirm-kicker">Hold up</span>
+          <h2 id="quitConfirmTitle">Agents are still working</h2>
+          <p class="t" id="quitConfirmDetail"></p>
+          <div class="row quit-confirm-actions">
+            <button class="btn ghost" id="quitKeep" type="button">Keep working</button>
+            <button class="btn danger filled" id="quitNow" type="button">Quit and stop agents</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="update-confirm" id="updateConfirm" role="dialog" aria-modal="true" aria-labelledby="updateConfirmTitle" hidden>
+        <div class="update-confirm-card ticket">
+          <span class="update-confirm-kicker">New release</span>
+          <h2 id="updateConfirmTitle"></h2>
+          <p class="t" id="updateConfirmDetail"></p>
+          <div class="update-confirm-notes" id="updateConfirmNotes"></div>
+          <a class="update-confirm-link" id="updateConfirmLink" target="_blank" rel="noreferrer"></a>
+          <div class="row update-confirm-actions">
+            <button class="btn ghost" id="updateLater" type="button">Later</button>
+            <button class="btn primary" id="updateNow" type="button"></button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Full view of one inbox message -->
+      <dialog class="message-dialog" id="messageDialog" aria-labelledby="messageDialogTitle">
+        <div class="ph">
+          <div class="row">
+            <div class="message-dialog-head">
+              <h2 id="messageDialogTitle"></h2>
+              <span class="sub" id="messageDialogMeta"></span>
+            </div>
+            <button class="close" id="messageDialogClose" type="button" aria-label="Close message"><svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+          </div>
+        </div>
+        <div class="message-dialog-body" id="messageDialogBody"></div>
+      </dialog>
+
+      <!-- Share dialog for agents and skills -->
+      <dialog class="share-dialog" id="shareDialog" aria-labelledby="shareTitle">
+        <div class="ph">
+          <div class="row">
+            <h2 id="shareTitle">Share</h2>
+            <button class="close" id="shareCancel" type="button" aria-label="Cancel"><svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+          </div>
+          <form id="shareForm" class="share-form">
+            <div class="share-preview" id="sharePreview"></div>
+            <div class="share-secrets-warning" id="shareSecretsWarning" hidden></div>
+            <label class="share-label" for="shareRecipient">
+              <b>Share with</b>
+              <span class="m">Enter their username</span>
+            </label>
+            <input class="ask-input" id="shareRecipient" type="text" placeholder="username" autocomplete="off" required />
+            <span class="msg-line" id="shareStatus" role="status" aria-live="polite"></span>
+            <div class="share-actions">
+              <button class="btn primary" type="submit">Share</button>
+            </div>
+          </form>
+        </div>
+      </dialog>
+    </div>
+
+  </body>
+</html>

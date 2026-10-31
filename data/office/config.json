@@ -1,0 +1,224 @@
+{
+  "configVersion": 3,
+  "port": 4317,
+  "factory": {
+    "enabled": false,
+    "mcpUrl": "",
+    "webBaseUrl": "",
+    "headers": {},
+    "pollSeconds": 90,
+    "filter": {
+      "assignee": null,
+      "statuses": [
+        "ready",
+        "in_progress"
+      ],
+      "phase": null,
+      "project": null,
+      "limit": 40
+    }
+  },
+  "github": {
+    "enabled": false,
+    "apiUrl": "https://api.github.com",
+    "host": "github.com",
+    "pollSeconds": 90,
+    "repos": [],
+    "inProgressStatuses": [
+      "in progress"
+    ],
+    "reviewStatuses": [
+      "in review"
+    ],
+    "limit": 100
+  },
+  "tracker": "github",
+  "repos": {
+    "default": {
+      "path": "~/Develop/my-app",
+      "baseBranch": "main"
+    },
+    "byProject": {
+      "my-app": {
+        "path": "~/Develop/my-app",
+        "baseBranch": "main"
+      }
+    },
+    "roots": [
+      "~/Develop",
+      "~/Development",
+      "~/code",
+      "~/src",
+      "~/projects"
+    ],
+    "known": [],
+    "hidden": [],
+    "cloneInto": null
+  },
+  "worktrees": {
+    "root": "~/git/worktrees",
+    "dirTemplate": "{root}/{repoName}/{key}-{slug}",
+    "branchTemplate": "{key}-{slug}"
+  },
+  "agents": {
+    "runnerMode": "codex",
+    "maxConcurrent": 16,
+    "model": null,
+    "effort": null,
+    "permission": "standard",
+    "standingInstructions": [
+      "Work only inside this worktree. Never touch files outside it.",
+      "Verify your change in the browser before opening a PR.",
+      "Start any question for Operator with \"QUESTION:\" on its own line so the office knows to raise your hand.",
+      "When you say you will go with a default, go with it in the same turn. Only stop to wait on a \"QUESTION:\" line or a \"START_WORK:\" plan.",
+      "When the PR is open, print the PR URL on its own line.",
+      "Do not run `git push --force`, and do not install packages without asking first."
+    ],
+    "registerFactoryMcp": true,
+    "idleAfterSeconds": 60,
+    "adoptExistingWorktrees": true,
+    "adoptStatuses": [
+      "in_progress"
+    ],
+    "resumeOnStart": true,
+    "autoApprove": false,
+    "autoReview": true,
+    "prFooter": true,
+    "review": {
+      "enabled": true,
+      "maxConcurrent": 2,
+      "largeDiffThreshold": 500,
+      "sensitivePatterns": [
+        "**/auth/**",
+        "**/payment*/**",
+        "**/migrations/**",
+        "**/.env*",
+        "**/secrets/**",
+        "**/config/prod*"
+      ],
+      "reviewTestChanges": true,
+      "reviewerRunner": "different"
+    },
+    "enabledRunners": [
+      "claude",
+      "acp",
+      "codex",
+      "ollama"
+    ]
+  },
+  "messageStyle": "technical",
+  "ideas": {
+    "lastProject": null,
+    "lastIssueType": null
+  },
+  "personas": [
+    {
+      "id": "frontend-engineer",
+      "name": "Frontend Engineer",
+      "permission": "standard",
+      "model": "sonnet",
+      "effort": null,
+      "look": {
+        "hair": "bun",
+        "hat": "headphones",
+        "face": "none",
+        "outfit": "hoodie",
+        "shirtColor": null,
+        "hairColor": null
+      },
+      "instructions": "You are the frontend specialist. Reuse the existing components and design tokens, check the change in the browser at desktop and phone widths, and put before and after screenshots in the PR.",
+      "description": "UI work: components, styling and layout, checked in the browser at desktop and phone widths."
+    },
+    {
+      "id": "backend-engineer",
+      "name": "Backend Engineer",
+      "permission": "standard",
+      "model": "opus",
+      "effort": "high",
+      "look": {
+        "hair": "crop",
+        "hat": "wizard",
+        "face": "beard",
+        "outfit": "tee",
+        "shirtColor": null,
+        "hairColor": null
+      },
+      "instructions": "You take the hardest problems. Plan before you code, split the work into steps, and prove each step with a test before moving on.",
+      "description": "Hard backend problems: plans the change, splits it into steps and proves each one with a test."
+    },
+    {
+      "id": "hacker",
+      "name": "Hacker",
+      "permission": "auto",
+      "model": "sonnet",
+      "effort": "max",
+      "look": {
+        "hair": "mohawk",
+        "hat": "none",
+        "face": "beard",
+        "outfit": "hoodie",
+        "shirtColor": "#4f7fe0",
+        "hairColor": "#8a5a3b"
+      },
+      "instructions": "You move fast. Get a working version end to end first, then tighten it. You may install packages and run whatever you need without asking, but stay inside your worktree, never touch credentials or production systems, and list every shortcut you took in the PR.",
+      "description": "A quick working version end to end, tightened afterwards, with every shortcut listed."
+    },
+    {
+      "id": "planner",
+      "name": "Planner",
+      "permission": "ask",
+      "model": "opus",
+      "effort": "high",
+      "look": {
+        "hair": "crop",
+        "hat": "none",
+        "face": "none",
+        "outfit": "labcoat",
+        "shirtColor": null,
+        "hairColor": null
+      },
+      "instructions": "Investigate before you change anything. Read the relevant code and its history, write down what you found and why, and cite file paths and line numbers. A clear written finding beats a speculative fix.",
+      "description": "Investigates before changing anything: reads the code and its history and writes up findings with file and line references."
+    },
+    {
+      "id": "qa",
+      "name": "QA",
+      "permission": "standard",
+      "model": "sonnet",
+      "effort": null,
+      "look": {
+        "hair": "crop",
+        "hat": "cap",
+        "face": "none",
+        "outfit": "tie",
+        "shirtColor": null,
+        "hairColor": null
+      },
+      "instructions": "You write and repair tests. Add the tests the ticket is missing, fix flaky ones by finding the cause rather than retrying, and follow the conventions of the existing test files. Change application code only when a test proves it is wrong, and say so in the PR.",
+      "description": "Writes missing tests and fixes flaky ones by finding the cause, following the existing test conventions."
+    }
+  ],
+  "editors": {
+    "preferred": "cursor",
+    "cursor": "cursor",
+    "vscode": "code"
+  },
+  "prWatch": {
+    "enabled": true,
+    "pollSeconds": 60,
+    "maxFixAttempts": 3,
+    "triggers": {
+      "failedChecks": true,
+      "conflicts": true,
+      "reviewComments": true
+    }
+  },
+  "voice": {
+    "enabled": false,
+    "rewrite": false
+  },
+  "obsidian": {
+    "vaultPath": "D:\\Project\\AgentCorp\\docs",
+    "enabled": true
+  }
+}

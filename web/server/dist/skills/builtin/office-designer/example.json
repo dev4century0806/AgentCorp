@@ -1,0 +1,129 @@
+{
+  "version": 1,
+  "name": "Below Deck",
+  "description": "A cozy pirate ship office at sunset, with barrels, maps and lanterns.",
+  "tags": ["pirate", "cozy", "sunset"],
+  "base": "office",
+  "furnishing": "minimal",
+  "lighting": {
+    "clear": "#1a0f0a",
+    "ambient": "#ffc890",
+    "ambientIntensity": 0.42,
+    "sky": "#ffd2a0",
+    "ground": "#3a2414",
+    "sun": "#ff9a4a",
+    "sunIntensity": 0.95,
+    "sunAt": [-16, 10, 4]
+  },
+  "palette": {
+    "wall": "#6b4528",
+    "trim": "#3e2614",
+    "skirt": "#2e1c0e",
+    "doorFrame": "#2e1c0e",
+    "doorLeaf": "#5a3a1e",
+    "doorLight": "#ffb45e",
+    "doorHandle": "#c9a227",
+    "screenOn": "#ffcf6e",
+    "screenOff": "#3a2a1a"
+  },
+  "floor": { "pattern": "planks", "color": "#7a5230", "alt": "#6a4526" },
+  "particles": { "kind": "dust", "color": "#ffdca0", "density": 0.3 },
+  "decorations": [
+    {
+      "slot": "back-left-corner",
+      "name": "stacked barrels",
+      "parts": [
+        { "shape": "cylinder", "size": [0.8, 1, 0.8], "at": [-0.35, 0.5, 0], "color": "#7d4a26" },
+        { "shape": "cylinder", "size": [0.84, 0.08, 0.84], "at": [-0.35, 0.25, 0], "color": "#3a3a3a" },
+        { "shape": "cylinder", "size": [0.84, 0.08, 0.84], "at": [-0.35, 0.75, 0], "color": "#3a3a3a" },
+        { "shape": "cylinder", "size": [0.7, 0.9, 0.7], "at": [0.4, 0.45, 0.2], "color": "#8a5530" },
+        { "shape": "cylinder", "size": [0.7, 0.85, 0.7], "at": [0, 1.43, 0], "color": "#7d4a26" }
+      ]
+    },
+    {
+      "slot": "front-centre",
+      "name": "ship's wheel",
+      "parts": [
+        { "shape": "box", "size": [0.3, 1.2, 0.3], "at": [0, 0.6, 0], "color": "#4a2e18" },
+        { "shape": "cylinder", "size": [1.4, 0.1, 1.4], "at": [0, 1.4, 0.2], "tilt": 90, "color": "#8a5530", "effect": "spin" },
+        { "shape": "cylinder", "size": [0.3, 0.14, 0.3], "at": [0, 1.4, 0.27], "tilt": 90, "color": "#c9a227" }
+      ]
+    },
+    {
+      "slot": "right-wall",
+      "name": "treasure map",
+      "parts": [
+        { "shape": "box", "size": [2.4, 1.6, 0.04], "at": [0, 0, 0.02], "color": "#e8d5a6" },
+        { "shape": "box", "size": [0.3, 0.3, 0.05], "at": [0.6, -0.3, 0.03], "color": "#a33b3b" }
+      ]
+    },
+    {
+      "slot": "back-wall-high",
+      "name": "rope garland with lanterns",
+      "parts": [
+        { "shape": "box", "size": [17, 0.08, 0.08], "at": [0, 0.4, 0.05], "color": "#c8a878" },
+        { "shape": "box", "size": [0.3, 0.42, 0.24], "at": [-6, 0, 0.12], "color": "#ffcf6e", "effect": "flicker" },
+        { "shape": "box", "size": [0.3, 0.42, 0.24], "at": [0, 0, 0.12], "color": "#ffcf6e", "effect": "flicker" },
+        { "shape": "box", "size": [0.3, 0.42, 0.24], "at": [6, 0, 0.12], "color": "#ffcf6e", "effect": "flicker" }
+      ]
+    },
+    {
+      "slot": "desk",
+      "name": "candle",
+      "parts": [
+        { "shape": "cylinder", "size": [0.08, 0.16, 0.08], "at": [0, 0.08, 0], "color": "#f2e6c8" },
+        { "shape": "cone", "size": [0.05, 0.08, 0.05], "at": [0, 0.2, 0], "color": "#ffb340", "effect": "flicker" }
+      ]
+    }
+  ],
+  "looks": [
+    {
+      "name": "Captain",
+      "skin": "#e0ac69",
+      "hair": "#2b1a10",
+      "hairStyle": "shoulder",
+      "shirt": "#7b2d26",
+      "pants": "#2a2a2a",
+      "outfit": "cardigan",
+      "addons": [
+        { "anchor": "head", "parts": [
+          { "shape": "box", "size": [0.62, 0.12, 0.42], "at": [0, 0.26, 0], "color": "#1c1c1c" },
+          { "shape": "cone", "size": [0.4, 0.22, 0.4], "at": [0, 0.4, 0], "color": "#1c1c1c" }
+        ] }
+      ]
+    },
+    {
+      "name": "Deckhand",
+      "skin": "#c68642",
+      "hair": "#5a3a20",
+      "hairStyle": "crop",
+      "shirt": "#f2f2f2",
+      "pants": "#3b4f7a",
+      "outfit": "tee",
+      "addons": [
+        { "anchor": "body", "parts": [
+          { "shape": "box", "size": [0.5, 0.06, 0.32], "at": [0, 0.1, 0], "color": "#a33b3b" },
+          { "shape": "box", "size": [0.5, 0.06, 0.32], "at": [0, -0.05, 0], "color": "#a33b3b" }
+        ] },
+        { "anchor": "head", "parts": [
+          { "shape": "box", "size": [0.5, 0.1, 0.5], "at": [0, 0.22, 0], "color": "#a33b3b" }
+        ] }
+      ]
+    },
+    {
+      "name": "Navigator",
+      "skin": "#8d5524",
+      "hair": "#111111",
+      "hairStyle": "bun",
+      "shirt": "#2f5d50",
+      "pants": "#4a3424",
+      "outfit": "hoodie",
+      "addons": [
+        { "anchor": "body", "parts": [
+          { "shape": "sphere", "size": [0.18, 0.2, 0.18], "at": [0.28, 0.28, 0], "color": "#3ddc84" },
+          { "shape": "cone", "size": [0.06, 0.08, 0.1], "at": [0.36, 0.28, 0], "color": "#e0c040" }
+        ] }
+      ]
+    }
+  ]
+}

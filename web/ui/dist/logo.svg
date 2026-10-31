@@ -1,0 +1,267 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-labelledby="ao-title ao-desc">
+  <title id="ao-title">AgentCorp — voxel AI worker icon</title>
+  <desc id="ao-desc">Front-facing square-headed agent with blocky charcoal hair and yellow digital eyes.</desc>
+  <defs>
+    <linearGradient id="ao-back" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#2C3440"/>
+      <stop offset="1" stop-color="#1F262F"/>
+    </linearGradient>
+    <linearGradient id="ao-low" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#28303B"/>
+      <stop offset="1" stop-color="#232A35"/>
+    </linearGradient>
+    <linearGradient id="ao-side" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#2A323E"/>
+      <stop offset="1" stop-color="#252C37"/>
+    </linearGradient>
+    <linearGradient id="ao-front" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#2D3541"/>
+      <stop offset="1" stop-color="#28303C"/>
+    </linearGradient>
+    <linearGradient id="ao-skin" gradientUnits="userSpaceOnUse" x1="0" y1="214" x2="0" y2="476.6">
+      <stop offset="0" stop-color="#FEDBA9"/>
+      <stop offset=".62" stop-color="#FEDBA8"/>
+      <stop offset=".69" stop-color="#FED8A2"/>
+      <stop offset=".83" stop-color="#FED69F"/>
+      <stop offset=".905" stop-color="#FED59D"/>
+      <stop offset=".948" stop-color="#FED49A"/>
+      <stop offset=".962" stop-color="#FDCB8A"/>
+      <stop offset=".97" stop-color="#FCBC74"/>
+      <stop offset=".978" stop-color="#FDB66D"/>
+      <stop offset=".99" stop-color="#FEB86F"/>
+      <stop offset="1" stop-color="#FCB063"/>
+    </linearGradient>
+    <linearGradient id="ao-visor" gradientUnits="userSpaceOnUse" x1="0" y1="277.7" x2="0" y2="433.3">
+      <stop offset="0" stop-color="#13171F"/>
+      <stop offset=".025" stop-color="#171B24"/>
+      <stop offset=".06" stop-color="#1D222C"/>
+      <stop offset=".1" stop-color="#1E242E"/>
+      <stop offset=".15" stop-color="#1F2530"/>
+      <stop offset=".9" stop-color="#1E242E"/>
+      <stop offset="1" stop-color="#1A1F28"/>
+    </linearGradient>
+    <radialGradient id="ao-glow" gradientUnits="userSpaceOnUse" cx="125.2" cy="298.9" r="32.1" gradientTransform="translate(125.2 298.9) scale(1 1.55) translate(-125.2 -298.9)">
+      <stop offset="0" stop-color="#7A3E2F" stop-opacity=".9"/>
+      <stop offset=".45" stop-color="#5E382E" stop-opacity=".55"/>
+      <stop offset="1" stop-color="#4A2C28" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="ao-eye" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#FCD63F"/>
+      <stop offset=".3" stop-color="#FED538"/>
+      <stop offset=".85" stop-color="#FDD030"/>
+      <stop offset="1" stop-color="#FBC824"/>
+    </linearGradient>
+    <filter id="ao-block" filterUnits="userSpaceOnUse" x="0" y="0" width="512" height="512" color-interpolation-filters="sRGB">
+      <feGaussianBlur in="SourceAlpha" stdDeviation=".9"/>
+      <feOffset dy=".3" result="t"/>
+      <feGaussianBlur in="SourceAlpha" stdDeviation="4.7"/>
+      <feOffset dy="5.7" result="m"/>
+      <feGaussianBlur in="SourceAlpha" stdDeviation="20.7"/>
+      <feOffset dy="11.3" result="w"/>
+      <feGaussianBlur in="SourceAlpha" stdDeviation="6.6" result="ao"/>
+      <feFlood flood-color="#000" flood-opacity=".19"/>
+      <feComposite in2="ao" operator="in" result="as"/>
+      <feFlood flood-color="#000" flood-opacity=".36"/>
+      <feComposite in2="w" operator="in" result="ws"/>
+      <feFlood flood-color="#000" flood-opacity=".25"/>
+      <feComposite in2="m" operator="in" result="ms"/>
+      <feFlood flood-color="#000" flood-opacity="0.45"/>
+      <feComposite in2="t" operator="in" result="ts"/>
+      <feOffset in="SourceAlpha" dx="0" dy="6.6"/>
+      <feGaussianBlur stdDeviation=".9"/>
+      <feComposite in="SourceAlpha" operator="out" result="hltm"/>
+      <feFlood flood-color="#B4C2D8" flood-opacity="0.11"/>
+      <feComposite in2="hltm" operator="in" result="hlt"/>
+      <feOffset in="SourceAlpha" dx="5.7" dy="0"/>
+      <feGaussianBlur stdDeviation=".9"/>
+      <feComposite in="SourceAlpha" operator="out" result="hllm"/>
+      <feFlood flood-color="#B4C2D8" flood-opacity="0.07"/>
+      <feComposite in2="hllm" operator="in" result="hll"/>
+      <feOffset in="SourceAlpha" dx="0" dy="-5.7"/>
+      <feGaussianBlur stdDeviation="1.5"/>
+      <feComposite in="SourceAlpha" operator="out" result="shm"/>
+      <feFlood flood-color="#000" flood-opacity="0.45"/>
+      <feComposite in2="shm" operator="in" result="sh"/>
+      <feMerge><feMergeNode in="ws"/><feMergeNode in="as"/><feMergeNode in="ms"/><feMergeNode in="ts"/><feMergeNode in="SourceGraphic"/><feMergeNode in="hlt"/><feMergeNode in="hll"/><feMergeNode in="sh"/></feMerge>
+    </filter>
+    <filter id="ao-blockFar" filterUnits="userSpaceOnUse" x="0" y="0" width="512" height="512" color-interpolation-filters="sRGB">
+      <feOffset in="SourceAlpha" dx="0" dy="6.6"/>
+      <feGaussianBlur stdDeviation=".9"/>
+      <feComposite in="SourceAlpha" operator="out" result="hltm"/>
+      <feFlood flood-color="#B4C2D8" flood-opacity="0.11"/>
+      <feComposite in2="hltm" operator="in" result="hlt"/>
+      <feOffset in="SourceAlpha" dx="5.7" dy="0"/>
+      <feGaussianBlur stdDeviation=".9"/>
+      <feComposite in="SourceAlpha" operator="out" result="hllm"/>
+      <feFlood flood-color="#B4C2D8" flood-opacity="0.07"/>
+      <feComposite in2="hllm" operator="in" result="hll"/>
+      <feOffset in="SourceAlpha" dx="0" dy="-5.7"/>
+      <feGaussianBlur stdDeviation="1.5"/>
+      <feComposite in="SourceAlpha" operator="out" result="shm"/>
+      <feFlood flood-color="#000" flood-opacity="0.45"/>
+      <feComposite in2="shm" operator="in" result="sh"/>
+      <feMerge><feMergeNode in="SourceGraphic"/><feMergeNode in="hlt"/><feMergeNode in="hll"/><feMergeNode in="sh"/></feMerge>
+    </filter>
+    <filter id="ao-bevel" filterUnits="userSpaceOnUse" x="0" y="0" width="512" height="512" color-interpolation-filters="sRGB">
+      <feOffset in="SourceAlpha" dx="0" dy="6.6"/>
+      <feGaussianBlur stdDeviation=".9"/>
+      <feComposite in="SourceAlpha" operator="out" result="hltm"/>
+      <feFlood flood-color="#B4C2D8" flood-opacity="0.17"/>
+      <feComposite in2="hltm" operator="in" result="hlt"/>
+      <feOffset in="SourceAlpha" dx="5.7" dy="0"/>
+      <feGaussianBlur stdDeviation=".9"/>
+      <feComposite in="SourceAlpha" operator="out" result="hllm"/>
+      <feFlood flood-color="#B4C2D8" flood-opacity="0.07"/>
+      <feComposite in2="hllm" operator="in" result="hll"/>
+      <feOffset in="SourceAlpha" dx="0" dy="-5.7"/>
+      <feGaussianBlur stdDeviation="1.5"/>
+      <feComposite in="SourceAlpha" operator="out" result="shm"/>
+      <feFlood flood-color="#000" flood-opacity="0.45"/>
+      <feComposite in2="shm" operator="in" result="sh"/>
+      <feMerge><feMergeNode in="SourceGraphic"/><feMergeNode in="hlt"/><feMergeNode in="hll"/><feMergeNode in="sh"/></feMerge>
+    </filter>
+    <filter id="ao-cast" filterUnits="userSpaceOnUse" x="0" y="0" width="512" height="512" color-interpolation-filters="sRGB">
+      <feGaussianBlur in="SourceAlpha" stdDeviation=".9"/>
+      <feOffset dy=".3" result="t"/>
+      <feGaussianBlur in="SourceAlpha" stdDeviation="4.7"/>
+      <feOffset dy="5.7" result="m"/>
+      <feGaussianBlur in="SourceAlpha" stdDeviation="20.7"/>
+      <feOffset dy="11.3" result="w"/>
+      <feGaussianBlur in="SourceAlpha" stdDeviation="6.6" result="ao"/>
+      <feFlood flood-color="#000" flood-opacity=".35"/>
+      <feComposite in2="ao" operator="in" result="as"/>
+      <feFlood flood-color="#000" flood-opacity=".65"/>
+      <feComposite in2="w" operator="in" result="ws"/>
+      <feFlood flood-color="#000" flood-opacity=".45"/>
+      <feComposite in2="m" operator="in" result="ms"/>
+      <feFlood flood-color="#000" flood-opacity="0.45"/>
+      <feComposite in2="t" operator="in" result="ts"/>
+      <feMerge><feMergeNode in="ws"/><feMergeNode in="as"/><feMergeNode in="ms"/><feMergeNode in="ts"/></feMerge>
+    </filter>
+    <filter id="ao-face" filterUnits="userSpaceOnUse" x="0" y="0" width="512" height="512" color-interpolation-filters="sRGB">
+      <feGaussianBlur in="SourceAlpha" stdDeviation="1.1" result="ft"/>
+      <feGaussianBlur in="SourceAlpha" stdDeviation="14.1" result="fw"/>
+      <feFlood flood-color="#000" flood-opacity=".8"/>
+      <feComposite in2="fw" operator="in" result="fws"/>
+      <feFlood flood-color="#000" flood-opacity=".6"/>
+      <feComposite in2="ft" operator="in" result="fts"/>
+      <feMorphology in="SourceAlpha" operator="erode" radius="1.9"/>
+      <feGaussianBlur stdDeviation=".8"/>
+      <feComposite in="SourceAlpha" operator="out" result="rimm"/>
+      <feFlood flood-color="#F2A55A" flood-opacity=".35"/>
+      <feComposite in2="rimm" operator="in" result="rim"/>
+      <feMerge><feMergeNode in="fws"/><feMergeNode in="fts"/><feMergeNode in="SourceGraphic"/><feMergeNode in="rim"/></feMerge>
+    </filter>
+    <filter id="ao-inset" filterUnits="userSpaceOnUse" x="0" y="0" width="512" height="512" color-interpolation-filters="sRGB">
+      <feGaussianBlur in="SourceAlpha" stdDeviation="3.8" result="b"/>
+      <feFlood flood-color="#000" flood-opacity="0.2"/>
+      <feComposite in2="b" operator="out"/>
+      <feComposite in2="SourceAlpha" operator="in" result="ins"/>
+      <feMerge><feMergeNode in="SourceGraphic"/><feMergeNode in="ins"/></feMerge>
+    </filter>
+    <filter id="ao-warm" filterUnits="userSpaceOnUse" x="0" y="0" width="512" height="512" color-interpolation-filters="sRGB">
+      <feGaussianBlur in="SourceAlpha" stdDeviation="9.4"/>
+      <feOffset dy="7.5" result="a"/>
+      <feGaussianBlur in="SourceAlpha" stdDeviation="3.3"/>
+      <feOffset dy="1.9" result="b"/>
+      <feFlood flood-color="#FA993B" flood-opacity="0.8"/>
+      <feComposite in2="a" operator="in" result="wa"/>
+      <feFlood flood-color="#FA993B" flood-opacity="0.85"/>
+      <feComposite in2="b" operator="in" result="wb"/>
+      <feMerge><feMergeNode in="wa"/><feMergeNode in="wb"/></feMerge>
+    </filter>
+    <filter id="ao-eyeFx" filterUnits="userSpaceOnUse" x="0" y="0" width="512" height="512" color-interpolation-filters="sRGB">
+      <feMorphology in="SourceAlpha" operator="dilate" radius="1.1" result="dil"/>
+      <feFlood flood-color="#0A111C" flood-opacity=".9"/>
+      <feComposite in2="dil" operator="in" result="ring"/>
+      <feGaussianBlur in="SourceAlpha" stdDeviation="2.8" result="halo0"/>
+      <feFlood flood-color="#000" flood-opacity=".45"/>
+      <feComposite in2="halo0" operator="in" result="halo"/>
+      <feGaussianBlur in="SourceAlpha" stdDeviation="3.3"/>
+      <feOffset dy="2.8" result="db"/>
+      <feFlood flood-color="#000" flood-opacity=".55"/>
+      <feComposite in2="db" operator="in" result="drop"/>
+      <feOffset in="SourceAlpha" dx="0" dy="1"/>
+      <feGaussianBlur stdDeviation=".4"/>
+      <feComposite in="SourceAlpha" operator="out" result="ehlm"/>
+      <feFlood flood-color="#FFF7A6" flood-opacity="0.85"/>
+      <feComposite in2="ehlm" operator="in" result="ehl"/>
+      <feOffset in="SourceAlpha" dx="1.2" dy="0"/>
+      <feGaussianBlur stdDeviation=".5"/>
+      <feComposite in="SourceAlpha" operator="out" result="ehsm"/>
+      <feFlood flood-color="#FFF2A0" flood-opacity="0.2"/>
+      <feComposite in2="ehsm" operator="in" result="ehs"/>
+      <feOffset in="SourceAlpha" dx="-.9" dy="0"/>
+      <feGaussianBlur stdDeviation=".5"/>
+      <feComposite in="SourceAlpha" operator="out" result="erhm"/>
+      <feFlood flood-color="#C99400" flood-opacity="0.12"/>
+      <feComposite in2="erhm" operator="in" result="erh"/>
+      <feOffset in="SourceAlpha" dx="0" dy="-1.1"/>
+      <feGaussianBlur stdDeviation=".5"/>
+      <feComposite in="SourceAlpha" operator="out" result="eshm"/>
+      <feFlood flood-color="#D9A000" flood-opacity="0.3"/>
+      <feComposite in2="eshm" operator="in" result="esh"/>
+      <feMerge><feMergeNode in="halo"/><feMergeNode in="drop"/><feMergeNode in="ring"/><feMergeNode in="SourceGraphic"/><feMergeNode in="ehl"/><feMergeNode in="ehs"/><feMergeNode in="erh"/><feMergeNode in="esh"/></feMerge>
+    </filter>
+    <rect x="38.9" y="251.8" width="59.9" height="130.3" rx="10.4" id="ao-ll"/>
+    <rect x="410" y="251.8" width="63" height="132.5" rx="10.4" id="ao-lr"/>
+    <rect x="20.4" y="139.4" width="66.2" height="148" rx="10.4" id="ao-fl"/>
+    <rect x="374.1" y="77" width="80.6" height="72.9" rx="10.4" id="ao-ur"/>
+    <rect x="55.1" y="77" width="83.4" height="70.1" rx="10.4" id="ao-ul"/>
+    <rect x="443.9" y="121" width="47.7" height="166.7" rx="10.4" id="ao-fr"/>
+    <rect x="116.7" y="35.5" width="278.2" height="54.1" rx="10.4" id="ao-cr"/>
+    <rect x="87.3" y="168.8" width="335.7" height="307.9" rx="15.1" id="ao-fc"/>
+    <path d="M74.3 145.2L248.3 145.2A7.1 7.1 0 0 1 255.3 152.3L255.3 239.5A7.1 7.1 0 0 1 248.3 246.6L125.9 246.6A2.8 2.8 0 0 0 123 249.4L123 280.5A7.1 7.1 0 0 1 116 287.6L93.6 287.6A7.1 7.1 0 0 1 86.6 280.5L86.6 265.9A2.8 2.8 0 0 0 83.7 263.1L74.3 263.1A7.1 7.1 0 0 1 67.2 256L67.2 152.3A7.1 7.1 0 0 1 74.3 145.2Z" id="ao-sb"/>
+    <path d="M132.3 88.6L377.9 88.6A7.1 7.1 0 0 1 385 95.7L385 128.2A2.8 2.8 0 0 0 387.8 131.1L437.8 131.1A7.1 7.1 0 0 1 444.9 138.1L444.9 282.4A7.1 7.1 0 0 1 437.8 289.5L410.9 289.5A7.1 7.1 0 0 1 403.8 282.4L403.8 259.3A2.8 2.8 0 0 0 401 256.5L377 256.5A7.1 7.1 0 0 1 369.9 249.4L369.9 217.8A2.8 2.8 0 0 0 367.1 215L262.4 215A7.1 7.1 0 0 1 255.3 207.9L255.3 191.9A2.8 2.8 0 0 0 252.5 189.1L132.3 189.1A7.1 7.1 0 0 1 125.2 182L125.2 95.7A7.1 7.1 0 0 1 132.3 88.6Z" id="ao-fg"/>
+    <rect x="124.7" y="278.1" width="261.7" height="155.6" rx="16" id="ao-vs"/>
+    <clipPath id="ao-sil"><use href="#ao-ll"/><use href="#ao-lr"/><use href="#ao-fl"/><use href="#ao-ur"/><use href="#ao-ul"/><use href="#ao-fr"/><use href="#ao-cr"/><use href="#ao-fc"/><use href="#ao-sb"/><use href="#ao-fg"/></clipPath>
+    <clipPath id="ao-faceClip"><use href="#ao-fc"/></clipPath>
+    <clipPath id="ao-sbClip"><use href="#ao-sb"/></clipPath>
+    <clipPath id="ao-fgClip"><use href="#ao-fg"/></clipPath>
+    <clipPath id="ao-visorClip"><use href="#ao-vs"/></clipPath>
+    <clipPath id="ao-skinSide"><path d="M87.3 287.6 L118.3 287.6 L118.3 246.6 L250.6 246.6 L250.6 215 L374.6 215 L374.6 256.5 L408.6 256.5 L408.6 289.5 L423 289.5 L423 476.6 L87.3 476.6Z"/></clipPath>
+    <clipPath id="ao-skinEdge"><path d="M87.3 285.2 L120.7 285.2 L120.7 244.2 L253 244.2 L253 212.6 L372.3 212.6 L372.3 254.1 L406.2 254.1 L406.2 287.1 L423 287.1 L423 476.6 L87.3 476.6Z"/></clipPath>
+  </defs>
+  <g clip-path="url(#ao-sil)">
+    <use href="#ao-ll" fill="url(#ao-low)" filter="url(#ao-blockFar)"/>
+    <use href="#ao-lr" fill="url(#ao-low)" filter="url(#ao-blockFar)"/>
+    <use href="#ao-ur" fill="url(#ao-back)" filter="url(#ao-blockFar)"/>
+    <use href="#ao-fl" fill="url(#ao-back)" filter="url(#ao-block)"/>
+    <use href="#ao-ul" fill="url(#ao-back)" filter="url(#ao-block)"/>
+    <use href="#ao-fr" fill="url(#ao-back)" filter="url(#ao-block)"/>
+    <use href="#ao-cr" fill="url(#ao-back)" filter="url(#ao-block)"/>
+    <use href="#ao-sb" filter="url(#ao-cast)"/>
+    <use href="#ao-fg" filter="url(#ao-cast)"/>
+    <use href="#ao-fc" fill="url(#ao-skin)" filter="url(#ao-face)"/>
+    <g clip-path="url(#ao-faceClip)">
+      <use href="#ao-sb" filter="url(#ao-warm)"/>
+      <use href="#ao-fg" filter="url(#ao-warm)"/>
+      <g fill="none" stroke="#FFBF68" stroke-width="2.8">
+        <use href="#ao-sb"/>
+        <use href="#ao-fg"/>
+      </g>
+    </g>
+    <rect x="122" y="275.4" width="266.9" height="160.9" rx="18.7" fill="#F4D09F"/>
+    <rect x="123.2" y="276.6" width="264.5" height="158.4" rx="17.4" fill="#FFF2BC"/>
+    <use href="#ao-vs" fill="#060B13"/>
+    <rect x="125.9" y="279.3" width="259.2" height="153.1" rx="14.8" fill="url(#ao-visor)" filter="url(#ao-inset)"/>
+    <rect x="119.6" y="272.5" width="66" height="103.7" fill="url(#ao-glow)" clip-path="url(#ao-visorClip)"/>
+    <g fill="url(#ao-eye)" filter="url(#ao-eyeFx)">
+      <rect x="161" y="316.4" width="40.8" height="79.4" rx="6.1"/>
+      <rect x="309.1" y="316.4" width="41" height="79.4" rx="6.1"/>
+    </g>
+    <use href="#ao-sb" fill="url(#ao-side)" filter="url(#ao-bevel)"/>
+    <use href="#ao-fg" filter="url(#ao-cast)" clip-path="url(#ao-sbClip)"/>
+    <use href="#ao-fg" fill="url(#ao-front)" filter="url(#ao-bevel)"/>
+    <g clip-path="url(#ao-skinSide)" fill="none" stroke="#03070D" stroke-opacity="0.22">
+      <use href="#ao-sb" clip-path="url(#ao-sbClip)" stroke-width="8.5"/>
+      <use href="#ao-fg" clip-path="url(#ao-fgClip)" stroke-width="8.5"/>
+      <use href="#ao-sb" clip-path="url(#ao-sbClip)" stroke-width="4.7"/>
+      <use href="#ao-fg" clip-path="url(#ao-fgClip)" stroke-width="4.7"/>
+    </g>
+    <g clip-path="url(#ao-skinEdge)" fill="none" stroke="#03070D" stroke-width="2.3">
+      <use href="#ao-sb" clip-path="url(#ao-sbClip)"/>
+      <use href="#ao-fg" clip-path="url(#ao-fgClip)"/>
+    </g>
+  </g>
+</svg>

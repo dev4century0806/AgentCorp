@@ -1,0 +1,35 @@
+{
+  "name": "agent-corp",
+  "version": "0.1.0",
+  "description": "AgentCorp - Virtual AI Agent Office Runtime & Local Orchestration Platform.",
+  "productName": "AgentCorp",
+  "author": "dev4century0806",
+  "type": "module",
+  "dependencies": {
+    "@agentclientprotocol/claude-agent-acp": "0.86.0",
+    "@agentclientprotocol/codex-acp": "2.1.1",
+    "@fastify/static": "10.1.5",
+    "@github/copilot": "1.0.92",
+    "@huggingface/transformers": "4.3.1",
+    "@modelcontextprotocol/sdk": "1.32.1",
+    "@supabase/supabase-js": "2.118.0",
+    "better-sqlite3": "12.11.1",
+    "fastify": "5.12.5",
+    "smol-toml": "1.9.1",
+    "sqlite-vec": "0.1.9",
+    "three": "0.187.0",
+    "ws": "8.22.0"
+  },
+  "scripts": {
+    "start": "node start.mjs",
+    "test": "node --test smoke.test.mjs streamline.test.mjs",
+    "backup": "node -e \"import('./server/dist/memory/backup.js').then(m => m.createDatabaseBackup()).then(console.log)\"",
+    "typecheck": "tsc -p tsconfig.json",
+    "build": "npm run typecheck && node build-ui.mjs"
+  },
+  "devDependencies": {
+    "@types/three": "0.187.0",
+    "esbuild": "0.28.2",
+    "typescript": "5.9.3"
+  }
+}
